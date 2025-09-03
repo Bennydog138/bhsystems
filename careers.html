@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BH Systems — Careers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="logo">BH Systems</div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="careers.html" class="active">Careers</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="ourteam.html">Our Team</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Careers Section -->
+  <section class="container">
+    <h2 class="sec-title">Join Our Team</h2>
+    <p class="sec-sub">We are looking for talented individuals to help grow BH Systems. Explore our open roles below and apply directly.</p>
+
+    <div class="job">
+      <h3>Head of Customer Relations</h3>
+      <span>Full-Time • Remote</span>
+      <p>As Head of Customer Relations you are in charge of Training and Supervising the Customer Relations Team. As well as that you will also be needed to respond to tickets and tickets that get esculated.</p>
+      <button onclick="openApplyModal('Head of Customer Relations')">Apply Now</button>
+    </div>
+
+    <div class="job">
+      <h3>Head of Staffing</h3>
+      <span>Full-Time • Remote</span>
+      <p>As Head of Staffing you will be in charge of Training and Supervising the Staff Team here at BH Systems. As well as that you will also be in charge of choosing our new hires.</p>
+      <button onclick="openApplyModal('Head of Staffing')">Apply Now</button>
+    </div>
+  </section>
+
+  <!-- Apply Modal -->
+  <div id="applyModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeApplyModal()">&times;</span>
+      <h2>Apply for <span id="jobRoleTitle"></span></h2>
+      <form id="applyForm" action="https://formspree.io/f/xgvlpvzk" method="POST">
+        <input type="text" name="roblox_username" placeholder="Roblox Username" required>
+        <input type="text" name="discord_username" placeholder="Discord Username" required>
+        <input type="text" name="role" id="roleInput" readonly>
+        <textarea name="why_choose" placeholder="Why we should choose you over other applicants" required></textarea>
+        <textarea name="experience" placeholder="Previous Experience" required></textarea>
+        <button type="submit">Submit Application</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Success Notification -->
+  <div id="successNotification" class="notification">Your application has been submitted!</div>
+
+  <script>
+    // Modal functionality
+    function openApplyModal(role) {
+      document.getElementById("applyModal").style.display = "flex";
+      document.getElementById("jobRoleTitle").innerText = role;
+      document.getElementById("roleInput").value = role;
+    }
+
+    function closeApplyModal() {
+      document.getElementById("applyModal").style.display = "none";
+    }
+
+    // Handle form submission
+    const form = document.getElementById('applyForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      }).then(response => {
+        if (response.ok) {
+          form.reset();
+          closeApplyModal();
+          showNotification();
+        } else {
+          alert('Oops! There was a problem submitting your application.');
+        }
+      }).catch(error => {
+        alert('Oops! There was a problem submitting your application.');
+      });
+    });
+
+    // Notification popup
+    function showNotification() {
+      const notification = document.getElementById('successNotification');
+      notification.style.display = 'block';
+      setTimeout(() => { notification.style.display = 'none'; }, 4000);
+    }
+  </script>
+
+</body>
+</html>

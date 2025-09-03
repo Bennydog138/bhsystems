@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BH Systems — Contact Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="logo">BH Systems</div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <div class="container">
+      <h2 class="sec-title">Contact Us</h2>
+      <p class="sec-sub">Have questions? Reach out to BH Systems and we’ll get back to you.</p>
+
+      <!-- Contact Form -->
+      <form id="contact-form" action="https://formspree.io/f/xgvlpvzk" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" rows="6" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Floating Notification -->
+  <div id="form-notification" class="notification"></div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 BH Systems. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript for UI Notification -->
+  <script>
+    const form = document.getElementById("contact-form");
+    const notification = document.getElementById("form-notification");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: form.method,
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          notification.textContent = "✅ Your message has been sent successfully!";
+          notification.classList.add("show");
+          form.reset();
+          setTimeout(() => {
+            notification.classList.remove("show");
+          }, 4000);
+        } else {
+          notification.textContent = "⚠️ Something went wrong. Please try again.";
+          notification.classList.add("show");
+          setTimeout(() => {
+            notification.classList.remove("show");
+          }, 4000);
+        }
+      } catch (error) {
+        notification.textContent = "⚠️ Network error. Please try again.";
+        notification.classList.add("show");
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 4000);
+      }
+    });
+  </script>
+
+</body>
+</html>
